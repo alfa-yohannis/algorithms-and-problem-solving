@@ -44,6 +44,35 @@ class Graph:
 
             self.rekursif_cetak_graph_dalam(other_node, node_memory)
 
+
+    def cetak_graph_lebar(self, start_node):
+        node_memory = []
+        print(start_node.value, end=" ")
+        node_memory.append(start_node)
+        self.rekursif_cetak_graph_lebar(start_node, node_memory)
+        node_memory.clear()
+        print()
+
+    def rekursif_cetak_graph_lebar(self,node, node_memory):
+
+        other_nodes = []
+        for edge in node.edges:
+            other_node = None
+            if edge.from_node == node:
+                other_node = edge.to_node
+            else:
+                other_node = edge.from_node
+        
+            if other_node in node_memory:
+                continue
+            
+            print(other_node.value, end=" ")
+            node_memory.append(other_node)
+            other_nodes.append(other_node)
+
+        for n in other_nodes:
+            self.rekursif_cetak_graph_lebar(n, node_memory)
+
 nodeA, nodeB, nodeC = Node("A"), Node("B"), Node("C")
 nodeD, nodeE, nodeF = Node("D"), Node("E"), Node("F")
 edge1, edge2, edge3, edge4 = Edge("1"), Edge("2"), Edge("3"), Edge("4")
@@ -57,10 +86,10 @@ edge6.set_from_node(nodeD), edge6.set_to_node(nodeF)
 edge7.set_from_node(nodeD), edge7.set_to_node(nodeE)
 
 graph = Graph()
+print("DFS: ", end="") 
 graph.cetak_graph_dalam(nodeA)
-graph.cetak_graph_dalam(nodeB)
-graph.cetak_graph_dalam(nodeC)
-graph.cetak_graph_dalam(nodeF)
+print("BFS: ", end="")
+graph.cetak_graph_lebar(nodeA)
 
 
 
