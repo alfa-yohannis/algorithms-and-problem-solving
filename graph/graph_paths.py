@@ -83,11 +83,21 @@ class Graph:
 
     def rekursif_cari_path_dalam(self, start_node, end_node, current_node, path_memory, stack, possible_paths):
         # print(current_node.value, end=" ")
+
+        if current_node.value in stack:
+            return 
+
+        if current_node == end_node:
+            path = stack.copy()
+            path.append(current_node.value)
+            possible_paths.append(path)
+            return
+
         path_memory.append(current_node)
         stack.append(current_node.value)
-        for e in stack:
-            print(e, end=" ")
-        print()
+        # for e in stack:
+        #     print(e, end=" ")
+        # print()
 
         for edge in current_node.edges:
             next_node = None
@@ -96,21 +106,12 @@ class Graph:
             else:
                 next_node = edge.from_node
             
-            if next_node == end_node:
-                path = stack.copy()
-                path.append(next_node.value)
-                possible_paths.append(path)
-                continue
-
-            if next_node in path_memory:
-                continue
-
             self.rekursif_cari_path_dalam(start_node, end_node, next_node, path_memory, stack, possible_paths)
         
         stack.pop(len(stack) - 1)
-        for e in stack:
-            print(e, end=" ")
-        print()
+        # for e in stack:
+        #     print(e, end=" ")
+        # print()
 
 
 
@@ -128,11 +129,11 @@ edge7.set_from_node(nodeD), edge7.set_to_node(nodeE)
 
 graph = Graph()
 
-# print("\nSemua path dari", nodeA.value, "ke", nodeD.value,":")
-# for paths in graph.cari_path(nodeA, nodeD):
-#     for element in paths:
-#         print(element, end=" ")
-#     print()
+print("\nSemua path dari", nodeA.value, "ke", nodeD.value,":")
+for paths in graph.cari_path(nodeA, nodeD):
+    for element in paths:
+        print(element, end=" ")
+    print()
 
 print("\nSemua path dari", nodeA.value, "ke", nodeF.value,":")
 for paths in graph.cari_path(nodeA, nodeF):
@@ -140,11 +141,11 @@ for paths in graph.cari_path(nodeA, nodeF):
         print(element, end=" ")
     print()
 
-# print("\nSemua path dari", nodeA.value, "ke", nodeC.value,":")
-# for paths in graph.cari_path(nodeA, nodeC):
-#     for element in paths:
-#         print(element, end=" ")
-#     print()
+print("\nSemua path dari", nodeA.value, "ke", nodeC.value,":")
+for paths in graph.cari_path(nodeA, nodeC):
+    for element in paths:
+        print(element, end=" ")
+    print()
 
     
 
