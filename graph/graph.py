@@ -24,13 +24,14 @@ class Graph:
 
     def cetak_graph_dalam(self, start_node):
         node_memory = []
-        node_memory.append(start_node)
         self.rekursif_cetak_graph_dalam(start_node, node_memory)
         node_memory.clear()
         print()
 
     def rekursif_cetak_graph_dalam(self,node, node_memory):
         print(node.value, end=" ")
+        node_memory.append(node)
+
         for edge in node.edges:
             other_node = None
             if edge.from_node == node:
@@ -41,10 +42,7 @@ class Graph:
             if other_node in node_memory:
                 continue
 
-            node_memory.append(other_node)
-            prev_node = node
             self.rekursif_cetak_graph_dalam(other_node, node_memory)
-            node = prev_node
 
 nodeA, nodeB, nodeC = Node("A"), Node("B"), Node("C")
 nodeD, nodeE, nodeF = Node("D"), Node("E"), Node("F")
@@ -62,6 +60,7 @@ graph = Graph()
 graph.cetak_graph_dalam(nodeA)
 graph.cetak_graph_dalam(nodeB)
 graph.cetak_graph_dalam(nodeC)
+graph.cetak_graph_dalam(nodeF)
 
 
 
