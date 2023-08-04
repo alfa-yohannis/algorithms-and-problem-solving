@@ -136,7 +136,18 @@ class Graph:
         return path_cost
 
     def hitung_biaya_nodes(self, path):
-        return -1
+        path_cost = 0
+        
+        for label in path:
+            node_dicari = None
+            for node in self.nodes:
+                if node.label == label:
+                    node_dicari = node
+                    break
+            
+            path_cost = path_cost + node_dicari.value
+
+        return path_cost
 
 
 graph = Graph()
