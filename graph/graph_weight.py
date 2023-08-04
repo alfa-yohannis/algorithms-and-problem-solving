@@ -1,6 +1,7 @@
 class Node:
-    def __init__(self, value):
-        self.value = value
+    def __init__(self, label):
+        self.label = label
+        self.value = None
         self.edges = []
 
 class Edge:
@@ -30,7 +31,7 @@ class Graph:
         print()
 
     def rekursif_cetak_graph_dalam(self,node, node_memory):
-        print(node.value, end=" ")
+        print(node.label, end=" ")
         node_memory.append(node)
 
         for edge in node.edges:
@@ -48,7 +49,7 @@ class Graph:
 
     def cetak_graph_lebar(self, start_node):
         node_memory = []
-        print(start_node.value, end=" ")
+        print(start_node.label, end=" ")
         node_memory.append(start_node)
         self.rekursif_cetak_graph_lebar(start_node, node_memory)
         node_memory.clear()
@@ -67,7 +68,7 @@ class Graph:
             if other_node in node_memory:
                 continue
             
-            print(other_node.value, end=" ")
+            print(other_node.label, end=" ")
             node_memory.append(other_node)
             other_nodes.append(other_node)
 
@@ -83,19 +84,19 @@ class Graph:
         return possible_paths
 
     def rekursif_cari_path_dalam(self, start_node, end_node, current_node, path_memory, stack, possible_paths):
-        # print(current_node.value, end=" ")
+        # print(current_node.label, end=" ")
 
-        if current_node.value in stack:
+        if current_node.label in stack:
             return 
 
         if current_node == end_node:
             path = stack.copy()
-            path.append(current_node.value)
+            path.append(current_node.label)
             possible_paths.append(path)
             return
 
         path_memory.append(current_node)
-        stack.append(current_node.value)
+        stack.append(current_node.label)
         # for e in stack:
         #     print(e, end=" ")
         # print()
@@ -123,23 +124,28 @@ class Graph:
             node2_value = path[index + 1]
             node1 = None
             for node in self.nodes:
-                if node.value == node1_value:
+                if node.label == node1_value:
                     node1 = node
                     break
             
             for edge in node1.edges:
-                if edge.from_node.value == node2_value or \
-                    edge.to_node.value == node2_value:
+                if edge.from_node.label == node2_value or \
+                    edge.to_node.label == node2_value:
                     path_cost = path_cost + edge.value
         
         return path_cost
 
-                
+    def hitung_biaya_nodes(self, path):
+        return -1
+
 
 graph = Graph()
 
 nodeA, nodeB, nodeC = Node("A"), Node("B"), Node("C")
 nodeD, nodeE, nodeF = Node("D"), Node("E"), Node("F")
+
+nodeA.value, nodeB.value, nodeC.value = 1, 2, 3
+nodeD.value, nodeE.value, nodeF.value = 4, 5, 6
 
 graph.nodes.append(nodeA), graph.nodes.append(nodeB),
 graph.nodes.append(nodeC), graph.nodes.append(nodeD),
@@ -167,36 +173,40 @@ edge7.value = 7
 
 
 
-print("\nSemua path dari", nodeA.value, "ke", nodeD.value,":")
+print("\nSemua path dari", nodeA.label, "ke", nodeD.label,":")
 for path in graph.cari_path(nodeA, nodeD):
     for element in path:
         print(element, end=" ")
     print("=", end=" ")
-    print(graph.hitung_biaya_path(path), end=" ")
+    print(graph.hitung_biaya_path(path), end=", ")
+    print(graph.hitung_biaya_nodes(path), end="")
     print()
 
-print("\nSemua path dari", nodeA.value, "ke", nodeF.value,":")
+print("\nSemua path dari", nodeA.label, "ke", nodeF.label,":")
 for path in graph.cari_path(nodeA, nodeF):
     for element in path:
         print(element, end=" ")
     print("=", end=" ")
-    print(graph.hitung_biaya_path(path), end=" ")
+    print(graph.hitung_biaya_path(path), end=", ")
+    print(graph.hitung_biaya_nodes(path), end="")
     print()
 
-print("\nSemua path dari", nodeA.value, "ke", nodeC.value,":")
+print("\nSemua path dari", nodeA.label, "ke", nodeC.label,":")
 for path in graph.cari_path(nodeA, nodeC):
     for element in path:
         print(element, end=" ")
     print("=", end=" ")
-    print(graph.hitung_biaya_path(path), end=" ")
+    print(graph.hitung_biaya_path(path), end=", ")
+    print(graph.hitung_biaya_nodes(path), end="")
     print()
 
-print("\nSemua path dari", nodeA.value, "ke", nodeE.value,":")
+print("\nSemua path dari", nodeA.label, "ke", nodeE.label,":")
 for path in graph.cari_path(nodeA, nodeE):
     for element in path:
         print(element, end=" ")
     print("=", end=" ")
-    print(graph.hitung_biaya_path(path), end=" ")
+    print(graph.hitung_biaya_path(path), end=", ")
+    print(graph.hitung_biaya_nodes(path), end="")
     print()
 
     
