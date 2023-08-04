@@ -20,7 +20,8 @@ class Edge:
 class Graph:
      
     def __init__(self):
-        pass
+        self.nodes = []
+        self.edges = []
 
     def cetak_graph_dalam(self, start_node):
         node_memory = []
@@ -113,12 +114,45 @@ class Graph:
         #     print(e, end=" ")
         # print()
 
+    def hitung_biaya_path(self, path):
+        
+        path_cost = 0
 
+        for index in range(0, len(path) - 1):
+            node1_value = path[index]
+            node2_value = path[index + 1]
+            node1 = None
+            for node in self.nodes:
+                if node.value == node1_value:
+                    node1 = node
+                    break
+            
+            for edge in node1.edges:
+                if edge.from_node.value == node2_value or \
+                    edge.to_node.value == node2_value:
+                    path_cost = path_cost + edge.value
+        
+        return path_cost
+
+                
+
+graph = Graph()
 
 nodeA, nodeB, nodeC = Node("A"), Node("B"), Node("C")
 nodeD, nodeE, nodeF = Node("D"), Node("E"), Node("F")
+
+graph.nodes.append(nodeA), graph.nodes.append(nodeB),
+graph.nodes.append(nodeC), graph.nodes.append(nodeD),
+graph.nodes.append(nodeE), graph.nodes.append(nodeF)
+
 edge1, edge2, edge3, edge4 = Edge("1"), Edge("2"), Edge("3"), Edge("4")
 edge5, edge6, edge7 = Edge("5"), Edge("6"), Edge("7")
+
+graph.edges.append(edge1), graph.edges.append(edge4),
+graph.edges.append(edge2), graph.edges.append(edge5),
+graph.edges.append(edge3), graph.edges.append(edge6),
+graph.edges.append(edge7)
+
 edge1.set_from_node(nodeA), edge1.set_to_node(nodeB)
 edge2.set_from_node(nodeA), edge2.set_to_node(nodeC)
 edge3.set_from_node(nodeB), edge3.set_to_node(nodeE)
@@ -127,30 +161,42 @@ edge5.set_from_node(nodeC), edge5.set_to_node(nodeD)
 edge6.set_from_node(nodeD), edge6.set_to_node(nodeF)
 edge7.set_from_node(nodeD), edge7.set_to_node(nodeE)
 
-graph = Graph()
+edge1.value, edge2.value, edge3.value = 1, 2, 3
+edge4.value, edge5.value, edge6.value = 4, 5, 6
+edge7.value = 7
+
+
 
 print("\nSemua path dari", nodeA.value, "ke", nodeD.value,":")
-for paths in graph.cari_path(nodeA, nodeD):
-    for element in paths:
+for path in graph.cari_path(nodeA, nodeD):
+    for element in path:
         print(element, end=" ")
+    print("=", end=" ")
+    print(graph.hitung_biaya_path(path), end=" ")
     print()
 
 print("\nSemua path dari", nodeA.value, "ke", nodeF.value,":")
-for paths in graph.cari_path(nodeA, nodeF):
-    for element in paths:
+for path in graph.cari_path(nodeA, nodeF):
+    for element in path:
         print(element, end=" ")
+    print("=", end=" ")
+    print(graph.hitung_biaya_path(path), end=" ")
     print()
 
 print("\nSemua path dari", nodeA.value, "ke", nodeC.value,":")
-for paths in graph.cari_path(nodeA, nodeC):
-    for element in paths:
+for path in graph.cari_path(nodeA, nodeC):
+    for element in path:
         print(element, end=" ")
+    print("=", end=" ")
+    print(graph.hitung_biaya_path(path), end=" ")
     print()
 
 print("\nSemua path dari", nodeA.value, "ke", nodeE.value,":")
-for paths in graph.cari_path(nodeA, nodeE):
-    for element in paths:
+for path in graph.cari_path(nodeA, nodeE):
+    for element in path:
         print(element, end=" ")
+    print("=", end=" ")
+    print(graph.hitung_biaya_path(path), end=" ")
     print()
 
     
