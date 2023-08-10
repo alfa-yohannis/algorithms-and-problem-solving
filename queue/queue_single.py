@@ -72,7 +72,11 @@ class QueueSingle:
         self.add_node(node)    
 
     def ambil_node(self):
-        pass
+        nilai_diambil = self.head
+        node_kedua = self.head.next
+        self.head.next = None
+        self.head = node_kedua
+        return nilai_diambil
    
 list = QueueSingle()
 list.add_node(Node(2))
